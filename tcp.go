@@ -7,11 +7,11 @@ import (
 	"time"
 
 	lgbl "github.com/ipfs/go-libp2p/loggables"
-	mafmt "gx/ipfs/QmWLfU4tstw2aNcTykDm44xbSTCYJ9pUJwfhQCKGwckcHx/mafmt"
-	manet "gx/ipfs/QmYVqhVfbK4BKvbW88Lhm26b3ud14sTBvcm1H7uWUx1Fkp/go-multiaddr-net"
-	context "gx/ipfs/QmZy2y8t9zQH2a1b8q2ZSLKp17ATuJoCNxxyMFG5qFExpt/go-net/context"
-	reuseport "gx/ipfs/QmaaC9QMYTQHCbMq3Ebr3uMaAR2ev4AVqMmsJpgQijAZbJ/go-reuseport"
-	ma "gx/ipfs/QmcobAGsCjYt5DXoq9et9L8yR8er7o7Cu3DTvpaq12jYSz/go-multiaddr"
+	ma "github.com/jbenet/go-multiaddr"
+	manet "github.com/jbenet/go-multiaddr-net"
+	reuseport "github.com/jbenet/go-reuseport"
+	mafmt "github.com/whyrusleeping/mafmt"
+	context "golang.org/x/net/context"
 )
 
 type TcpTransport struct {

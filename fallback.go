@@ -3,11 +3,11 @@ package transport
 import (
 	"fmt"
 
-	mafmt "gx/ipfs/QmWLfU4tstw2aNcTykDm44xbSTCYJ9pUJwfhQCKGwckcHx/mafmt"
-	manet "gx/ipfs/QmYVqhVfbK4BKvbW88Lhm26b3ud14sTBvcm1H7uWUx1Fkp/go-multiaddr-net"
-	mautp "gx/ipfs/QmYVqhVfbK4BKvbW88Lhm26b3ud14sTBvcm1H7uWUx1Fkp/go-multiaddr-net/utp"
-	utp "gx/ipfs/QmadkZhaLw1AhXKyBiPmydRuTexhj6WkiZPpo5Uks6WUVq/utp"
-	ma "gx/ipfs/QmcobAGsCjYt5DXoq9et9L8yR8er7o7Cu3DTvpaq12jYSz/go-multiaddr"
+	utp "github.com/anacrolix/utp"
+	ma "github.com/jbenet/go-multiaddr"
+	manet "github.com/jbenet/go-multiaddr-net"
+	mautp "github.com/jbenet/go-multiaddr-net/utp"
+	mafmt "github.com/whyrusleeping/mafmt"
 )
 
 type FallbackDialer struct {
