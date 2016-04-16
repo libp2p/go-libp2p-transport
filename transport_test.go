@@ -133,3 +133,17 @@ func checkDataTransfer(a, b io.ReadWriter) error {
 
 	return nil
 }
+
+func TestTcpTransportCantListenUtp(t *testing.T) {
+	utpa, err := ma.NewMultiaddr("/ip4/127.0.0.1/udp/0/utp")
+	if err != nil {
+		t.Fatal(err)
+	}
+
+	tpt := NewTCPTransport()
+	_, err = tpt.Listen(utpa)
+	if err == nil {
+		t.Fatal("shouldnt be able to listen on utp addr with tcp transport")
+	}
+
+}

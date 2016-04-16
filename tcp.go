@@ -22,6 +22,8 @@ type TcpTransport struct {
 	listeners map[string]Listener
 }
 
+// NewTCPTransport creates a tcp transport object that tracks dialers and listeners
+// created. It represents an entire tcp stack (though it might not necessarily be)
 func NewTCPTransport() *TcpTransport {
 	return &TcpTransport{
 		dialers:   make(map[string]Dialer),
@@ -61,6 +63,10 @@ func (t *TcpTransport) Dialer(laddr ma.Multiaddr, opts ...DialOpt) (Dialer, erro
 }
 
 func (t *TcpTransport) Listen(laddr ma.Multiaddr) (Listener, error) {
+	if !t.Matches(laddr) {
+		return nil, fmt.Errorf("tcp transport cannot listen on %q", laddr)
+	}
+
 	t.llock.Lock()
 	defer t.llock.Unlock()
 	s := laddr.String()
