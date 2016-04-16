@@ -6,7 +6,7 @@ import (
 	"sync"
 	"time"
 
-	lgbl "github.com/ipfs/go-libp2p/loggables"
+	lgbl "github.com/ipfs/go-libp2p-loggables"
 	ma "github.com/jbenet/go-multiaddr"
 	manet "github.com/jbenet/go-multiaddr-net"
 	reuseport "github.com/jbenet/go-reuseport"
