@@ -23,7 +23,7 @@ func (fbd *FallbackDialer) Dial(a ma.Multiaddr) (Conn, error) {
 		return fbd.tcpDial(a)
 	}
 	if mafmt.UTP.Matches(a) {
-		return fbd.tcpDial(a)
+		return fbd.utpDial(a)
 	}
 	return nil, fmt.Errorf("cannot dial %s with fallback dialer", a)
 }
