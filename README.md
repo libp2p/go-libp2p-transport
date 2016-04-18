@@ -7,6 +7,15 @@
 
 A common interface for network transports.
 
+This is the 'base' layer for any transport that wants to be used by libp2p and ipfs. If you want to make 'ipfs work over X', the first thing you'll want to do is to implement the `Transport` interface for 'X'.
+
+## Installation
+
+```sh
+> gx install --global
+> gx-go rewrite
+```
+
 ## Usage
 
 ```go
