@@ -9,15 +9,15 @@
   "gxDependencies": [
     {
       "author": "whyrusleeping",
-      "hash": "QmcobAGsCjYt5DXoq9et9L8yR8er7o7Cu3DTvpaq12jYSz",
+      "hash": "QmYzDkkgAEmrcNzFCiYo6L1dTX4EAG1gZkbtdbd9trL4vd",
       "name": "go-multiaddr",
       "version": "0.0.0"
     },
     {
       "author": "whyrusleeping",
-      "hash": "QmYqiDbGUGqatbPFie11Py8cnyduoJYqcgKtjfhu1SQLh1",
+      "hash": "Qmdt3dCBXLwr9TEYbmcx6adfP4mNfNArKyWMmYy4EzpHiu",
       "name": "go-libp2p-loggables",
-      "version": "1.0.1"
+      "version": "1.0.2"
     },
     {
       "author": "whyrusleeping",
@@ -27,20 +27,20 @@
     },
     {
       "author": "whyrusleeping",
-      "hash": "QmTrxSBY8Wqd5aBB4MeizeSzS5xFbK8dQBrYaMsiGnCBhb",
+      "hash": "QmUBa4w6CbHJUMeGJPDiMEDWsM93xToK1fTnFXnrC8Hksw",
       "name": "go-multiaddr-net",
-      "version": "1.0.0"
+      "version": "1.0.1"
     },
     {
       "author": "whyrusleeping",
-      "hash": "QmWLfU4tstw2aNcTykDm44xbSTCYJ9pUJwfhQCKGwckcHx",
+      "hash": "QmeLQ13LftT9XhNn22piZc3GP56fGqhijuL5Y8KdUaRn1g",
       "name": "mafmt",
-      "version": "0.0.0"
+      "version": "1.1.1"
     }
   ],
   "gxVersion": "0.4.0",
   "language": "go",
   "license": "MIT",
   "name": "go-libp2p-transport",
-  "version": "1.1.0"
+  "version": "1.1.1"
 }
