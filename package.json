@@ -15,9 +15,9 @@
     },
     {
       "author": "whyrusleeping",
-      "hash": "Qmdt3dCBXLwr9TEYbmcx6adfP4mNfNArKyWMmYy4EzpHiu",
+      "hash": "QmPXZMFcBV9eXgxYUEansHqNhLLxy86ccoNy5TBTa8M5kE",
       "name": "go-libp2p-loggables",
-      "version": "1.0.2"
+      "version": "1.0.3"
     },
     {
       "author": "whyrusleeping",
@@ -27,9 +27,9 @@
     },
     {
       "author": "whyrusleeping",
-      "hash": "QmUBa4w6CbHJUMeGJPDiMEDWsM93xToK1fTnFXnrC8Hksw",
+      "hash": "QmYp8PC6b9M3UY4awdHkdRUim68KpGSmRmz27bANHteen6",
       "name": "go-multiaddr-net",
-      "version": "1.0.1"
+      "version": "1.1.0"
     },
     {
       "author": "whyrusleeping",
@@ -42,5 +42,5 @@
   "language": "go",
   "license": "MIT",
   "name": "go-libp2p-transport",
-  "version": "1.1.1"
+  "version": "1.1.2"
 }
