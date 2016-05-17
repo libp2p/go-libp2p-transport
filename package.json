@@ -15,9 +15,9 @@
     },
     {
       "author": "whyrusleeping",
-      "hash": "QmPXZMFcBV9eXgxYUEansHqNhLLxy86ccoNy5TBTa8M5kE",
+      "hash": "QmTfX8ffnQZ4twPpfC9ye7FcFeFKw4najRESmyeymsT6aa",
       "name": "go-libp2p-loggables",
-      "version": "1.0.3"
+      "version": "1.0.4"
     },
     {
       "author": "whyrusleeping",
@@ -42,5 +42,5 @@
   "language": "go",
   "license": "MIT",
   "name": "go-libp2p-transport",
-  "version": "1.1.2"
+  "version": "1.1.3"
 }
