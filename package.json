@@ -27,20 +27,26 @@
     },
     {
       "author": "whyrusleeping",
-      "hash": "QmYp8PC6b9M3UY4awdHkdRUim68KpGSmRmz27bANHteen6",
+      "hash": "QmPpRcbNUXauP3zWZ1NJMLWpe4QnmEHrd2ba2D3yqWznw7",
       "name": "go-multiaddr-net",
-      "version": "1.1.0"
+      "version": "1.2.0"
     },
     {
       "author": "whyrusleeping",
       "hash": "QmeLQ13LftT9XhNn22piZc3GP56fGqhijuL5Y8KdUaRn1g",
       "name": "mafmt",
       "version": "1.1.1"
+    },
+    {
+      "author": "whyrusleeping",
+      "hash": "QmPSR1zYgWRmTSt6nTGXdeeUhWkq9AdvK4sva4Y2H5daPi",
+      "name": "utp",
+      "version": "0.0.0"
     }
   ],
   "gxVersion": "0.4.0",
   "language": "go",
   "license": "MIT",
   "name": "go-libp2p-transport",
-  "version": "1.1.4"
+  "version": "1.2.0"
 }

@@ -112,11 +112,13 @@ func TestFallbackDialUtp(t *testing.T) {
 		scon, err := list.Accept()
 		if err != nil {
 			t.Error(err)
+			return
 		}
 
 		err = assertWrite(scon, message)
 		if err != nil {
 			t.Error(err)
+			return
 		}
 
 		if scon.Transport() != utptpt {

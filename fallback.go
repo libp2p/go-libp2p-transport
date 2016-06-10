@@ -6,7 +6,6 @@ import (
 	utp "github.com/anacrolix/utp"
 	ma "github.com/jbenet/go-multiaddr"
 	manet "github.com/jbenet/go-multiaddr-net"
-	mautp "github.com/jbenet/go-multiaddr-net/utp"
 	mafmt "github.com/whyrusleeping/mafmt"
 )
 
@@ -53,7 +52,7 @@ func (fbd *FallbackDialer) utpDial(raddr ma.Multiaddr) (Conn, error) {
 		return nil, err
 	}
 
-	mnc, err := manet.WrapNetConn(&mautp.Conn{Conn: con})
+	mnc, err := manet.WrapNetConn(con)
 	if err != nil {
 		return nil, err
 	}

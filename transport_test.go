@@ -147,3 +147,12 @@ func TestTcpTransportCantListenUtp(t *testing.T) {
 	}
 
 }
+
+func TestUtpThing(t *testing.T) {
+	utpa, err := ma.NewMultiaddr("/ip4/127.0.0.1/udp/0/utp")
+	if err != nil {
+		t.Fatal(err)
+	}
+
+	parseUtpMaddr(utpa)
+}

@@ -1,15 +1,28 @@
 package transport
 
 import (
+	"fmt"
 	"net"
 	"sync"
 
 	utp "github.com/anacrolix/utp"
 	ma "github.com/jbenet/go-multiaddr"
 	manet "github.com/jbenet/go-multiaddr-net"
-	mautp "github.com/jbenet/go-multiaddr-net/utp"
 	mafmt "github.com/whyrusleeping/mafmt"
 )
+
+var errIncorrectNetAddr = fmt.Errorf("incorrect network addr conversion")
+
+var utpAddrSpec = &manet.NetCodec{
+	ProtocolName:     "utp",
+	NetAddrNetworks:  []string{"utp", "utp4", "utp6"},
+	ParseNetAddr:     parseUtpNetAddr,
+	ConvertMultiaddr: parseUtpMaddr,
+}
+
+func init() {
+	manet.RegisterNetCodec(utpAddrSpec)
+}
 
 type UtpTransport struct {
 	sockLock sync.Mutex
@@ -77,7 +90,7 @@ func (t *UtpTransport) newConn(addr ma.Multiaddr, opts ...DialOpt) (*UtpSocket, 
 		return nil, err
 	}
 
-	laddr, err := manet.FromNetAddr(mautp.MakeAddr(s.LocalAddr()))
+	laddr, err := manet.FromNetAddr(s.LocalAddr())
 	if err != nil {
 		return nil, err
 	}
@@ -100,7 +113,7 @@ func (s *UtpSocket) Dial(raddr ma.Multiaddr) (Conn, error) {
 		return nil, err
 	}
 
-	mnc, err := manet.WrapNetConn(&mautp.Conn{Conn: con})
+	mnc, err := manet.WrapNetConn(con)
 	if err != nil {
 		return nil, err
 	}
@@ -117,7 +130,7 @@ func (s *UtpSocket) Accept() (Conn, error) {
 		return nil, err
 	}
 
-	mnc, err := manet.WrapNetConn(&mautp.Conn{Conn: c})
+	mnc, err := manet.WrapNetConn(c)
 	if err != nil {
 		return nil, err
 	}
@@ -145,3 +158,46 @@ func (t *UtpSocket) Multiaddr() ma.Multiaddr {
 }
 
 var _ Transport = (*UtpTransport)(nil)
+
+func parseUtpNetAddr(a net.Addr) (ma.Multiaddr, error) {
+	var udpaddr *net.UDPAddr
+	switch a := a.(type) {
+	case *utp.Addr:
+		udpaddr = a.Child.(*net.UDPAddr)
+	case *net.UDPAddr:
+		udpaddr = a
+	default:
+		return nil, fmt.Errorf("was not given a valid utp address")
+	}
+
+	// Get IP Addr
+	ipm, err := manet.FromIP(udpaddr.IP)
+	if err != nil {
+		return nil, errIncorrectNetAddr
+	}
+
+	// Get UDP Addr
+	utpm, err := ma.NewMultiaddr(fmt.Sprintf("/udp/%d/utp", udpaddr.Port))
+	if err != nil {
+		return nil, errIncorrectNetAddr
+	}
+
+	// Encapsulate
+	return ipm.Encapsulate(utpm), nil
+}
+
+func parseUtpMaddr(maddr ma.Multiaddr) (net.Addr, error) {
+	utpbase, err := ma.NewMultiaddr("/utp")
+	if err != nil {
+		return nil, err
+	}
+
+	raw := maddr.Decapsulate(utpbase)
+
+	udpa, err := manet.ToNetAddr(raw)
+	if err != nil {
+		return nil, err
+	}
+
+	return &utp.Addr{udpa}, nil
+}
