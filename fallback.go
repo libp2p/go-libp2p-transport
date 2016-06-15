@@ -14,15 +14,12 @@ type FallbackDialer struct {
 }
 
 func (fbd *FallbackDialer) Matches(a ma.Multiaddr) bool {
-	return mafmt.TCP.Matches(a) || mafmt.UTP.Matches(a)
+	return mafmt.TCP.Matches(a)
 }
 
 func (fbd *FallbackDialer) Dial(a ma.Multiaddr) (Conn, error) {
 	if mafmt.TCP.Matches(a) {
 		return fbd.tcpDial(a)
-	}
-	if mafmt.UTP.Matches(a) {
-		return fbd.utpDial(a)
 	}
 	return nil, fmt.Errorf("cannot dial %s with fallback dialer", a)
 }
@@ -41,6 +38,8 @@ func (fbd *FallbackDialer) tcpDial(raddr ma.Multiaddr) (Conn, error) {
 	}, nil
 }
 
+// NOTE: this code is currently not in use. utp is not stable enough for prolonged
+// use on the network, and causes random stalls in the stack.
 func (fbd *FallbackDialer) utpDial(raddr ma.Multiaddr) (Conn, error) {
 	_, addr, err := manet.DialArgs(raddr)
 	if err != nil {
