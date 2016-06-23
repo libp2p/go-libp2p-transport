@@ -15,9 +15,9 @@
     },
     {
       "author": "whyrusleeping",
-      "hash": "QmPrvyccGDqAQfLkL7H1WnCkL8djHuXLt8kmacvfFFKnVi",
+      "hash": "QmNaS34WZRjs4U1kDfRR2aooYSsBSusFPMEg3dAKk7VZid",
       "name": "go-libp2p-loggables",
-      "version": "1.0.6"
+      "version": "1.0.7"
     },
     {
       "author": "whyrusleeping",
