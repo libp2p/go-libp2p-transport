@@ -1,6 +1,7 @@
 package transport
 
 import (
+	"context"
 	"fmt"
 	"net"
 	"sync"
@@ -102,7 +103,7 @@ func (t *UtpTransport) newConn(addr ma.Multiaddr, opts ...DialOpt) (*UtpSocket, 
 	}, nil
 }
 
-func (s *UtpSocket) Dial(raddr ma.Multiaddr) (Conn, error) {
+func (s *UtpSocket) Dial(ctx context.Context, raddr ma.Multiaddr) (Conn, error) {
 	_, addr, err := manet.DialArgs(raddr)
 	if err != nil {
 		return nil, err

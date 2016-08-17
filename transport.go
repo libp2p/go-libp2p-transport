@@ -1,6 +1,7 @@
 package transport
 
 import (
+	"context"
 	"net"
 	"time"
 
@@ -34,7 +35,7 @@ type Transport interface {
 // setting TCP dial timeout for all dials made, or setting the local address
 // that we dial out from.
 type Dialer interface {
-	Dial(raddr ma.Multiaddr) (Conn, error)
+	Dial(ctx context.Context, raddr ma.Multiaddr) (Conn, error)
 	Matches(ma.Multiaddr) bool
 }
 
