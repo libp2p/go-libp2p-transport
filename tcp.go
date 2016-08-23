@@ -1,6 +1,7 @@
 package transport
 
 import (
+	"context"
 	"fmt"
 	"net"
 	"sync"
@@ -11,7 +12,6 @@ import (
 	manet "github.com/jbenet/go-multiaddr-net"
 	reuseport "github.com/jbenet/go-reuseport"
 	mafmt "github.com/whyrusleeping/mafmt"
-	context "golang.org/x/net/context"
 )
 
 type TcpTransport struct {
