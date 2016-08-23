@@ -90,6 +90,7 @@ func TestFallbackDialTcp(t *testing.T) {
 }
 
 func TestFallbackDialUtp(t *testing.T) {
+	t.Skip("fallback dialer has utp disabled")
 	laddr, err := ma.NewMultiaddr("/ip4/127.0.0.1/udp/0/utp")
 	if err != nil {
 		t.Fatal(err)
