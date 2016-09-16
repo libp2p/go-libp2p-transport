@@ -1,6 +1,7 @@
 package transport
 
 import (
+	"context"
 	"net"
 	"time"
 
@@ -35,6 +36,7 @@ type Transport interface {
 // that we dial out from.
 type Dialer interface {
 	Dial(raddr ma.Multiaddr) (Conn, error)
+	DialContext(ctx context.Context, raddr ma.Multiaddr) (Conn, error)
 	Matches(ma.Multiaddr) bool
 }
 
