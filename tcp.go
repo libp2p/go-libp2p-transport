@@ -157,12 +157,16 @@ func (t *TcpTransport) newTcpDialer(base manet.Dialer, laddr ma.Multiaddr, doReu
 }
 
 func (d *tcpDialer) Dial(raddr ma.Multiaddr) (Conn, error) {
+	return d.DialContext(context.Background(), raddr)
+}
+
+func (d *tcpDialer) DialContext(ctx context.Context, raddr ma.Multiaddr) (Conn, error) {
 	var c manet.Conn
 	var err error
 	if d.doReuse {
-		c, err = d.reuseDial(raddr)
+		c, err = d.reuseDial(ctx, raddr)
 	} else {
-		c, err = d.madialer.Dial(raddr)
+		c, err = d.madialer.DialContext(ctx, raddr)
 	}
 
 	if err != nil {
@@ -175,16 +179,16 @@ func (d *tcpDialer) Dial(raddr ma.Multiaddr) (Conn, error) {
 	}, nil
 }
 
-func (d *tcpDialer) reuseDial(raddr ma.Multiaddr) (manet.Conn, error) {
+func (d *tcpDialer) reuseDial(ctx context.Context, raddr ma.Multiaddr) (manet.Conn, error) {
 	logdial := lgbl.Dial("conn", "", "", d.laddr, raddr)
-	rpev := log.EventBegin(context.TODO(), "tptDialReusePort", logdial)
+	rpev := log.EventBegin(ctx, "tptDialReusePort", logdial)
 
 	network, netraddr, err := manet.DialArgs(raddr)
 	if err != nil {
 		return nil, err
 	}
 
-	con, err := d.rd.Dial(network, netraddr)
+	con, err := d.rd.DialContext(ctx, network, netraddr)
 	if err == nil {
 		logdial["reuseport"] = "success"
 		rpev.Done()
@@ -202,7 +206,7 @@ func (d *tcpDialer) reuseDial(raddr ma.Multiaddr) (manet.Conn, error) {
 	logdial["error"] = err
 	rpev.Done()
 
-	return d.madialer.Dial(raddr)
+	return d.madialer.DialContext(ctx, raddr)
 }
 
 func (d *tcpDialer) Matches(a ma.Multiaddr) bool {
