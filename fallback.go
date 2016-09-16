@@ -1,6 +1,7 @@
 package transport
 
 import (
+	"context"
 	"fmt"
 
 	utp "github.com/anacrolix/utp"
@@ -18,16 +19,20 @@ func (fbd *FallbackDialer) Matches(a ma.Multiaddr) bool {
 }
 
 func (fbd *FallbackDialer) Dial(a ma.Multiaddr) (Conn, error) {
+	return fbd.DialContext(context.Background(), a)
+}
+
+func (fbd *FallbackDialer) DialContext(ctx context.Context, a ma.Multiaddr) (Conn, error) {
 	if mafmt.TCP.Matches(a) {
-		return fbd.tcpDial(a)
+		return fbd.tcpDial(ctx, a)
 	}
 	return nil, fmt.Errorf("cannot dial %s with fallback dialer", a)
 }
 
-func (fbd *FallbackDialer) tcpDial(raddr ma.Multiaddr) (Conn, error) {
+func (fbd *FallbackDialer) tcpDial(ctx context.Context, raddr ma.Multiaddr) (Conn, error) {
 	var c manet.Conn
 	var err error
-	c, err = fbd.madialer.Dial(raddr)
+	c, err = fbd.madialer.DialContext(ctx, raddr)
 
 	if err != nil {
 		return nil, err
@@ -60,3 +65,5 @@ func (fbd *FallbackDialer) utpDial(raddr ma.Multiaddr) (Conn, error) {
 		Conn: mnc,
 	}, nil
 }
+
+var _ Dialer = (*FallbackDialer)(nil)
