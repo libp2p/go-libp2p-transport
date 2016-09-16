@@ -21,9 +21,9 @@
     },
     {
       "author": "whyrusleeping",
-      "hash": "QmdvAtoUu3G2roG9sa957FqJSBTykm6TxTTPWURsrvfnbQ",
+      "hash": "QmeivQB6J3BNaUCBDvSkVwUvokgav6JSrngDb6xGMdjTwm",
       "name": "go-reuseport",
-      "version": "0.0.0"
+      "version": "0.1.0"
     },
     {
       "author": "whyrusleeping",
@@ -48,5 +48,5 @@
   "language": "go",
   "license": "MIT",
   "name": "go-libp2p-transport",
-  "version": "1.6.0"
+  "version": "1.6.1"
 }
