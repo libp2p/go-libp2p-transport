@@ -5,7 +5,7 @@ import (
 	"io"
 	"testing"
 
-	ma "github.com/jbenet/go-multiaddr"
+	ma "github.com/multiformats/go-multiaddr"
 )
 
 func TestTcpTransport(t *testing.T) {
