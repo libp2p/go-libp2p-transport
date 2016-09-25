@@ -53,11 +53,11 @@ type Listener interface {
 
 type ConnWrap struct {
 	manet.Conn
-	transport Transport
+	Tpt Transport
 }
 
 func (cw *ConnWrap) Transport() Transport {
-	return cw.transport
+	return cw.Tpt
 }
 
 // DialOpt is an option used for configuring dialer behaviour
