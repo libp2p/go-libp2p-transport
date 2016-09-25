@@ -1,8 +1,11 @@
 package utils
 
 import (
+	"fmt"
+	"io"
 	"testing"
 
+	ma "github.com/jbenet/go-multiaddr"
 	tpt "github.com/libp2p/go-libp2p-transport"
 )
 
@@ -22,7 +25,7 @@ func SubtestTransport(t *testing.T, ta, tb tpt.Transport, addr string) {
 		t.Fatal(err)
 	}
 
-	accepted := make(chan Conn, 1)
+	accepted := make(chan tpt.Conn, 1)
 	errs := make(chan error, 1)
 	go func() {
 		b, err := list.Accept()
