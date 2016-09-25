@@ -4,7 +4,6 @@ import (
 	"context"
 	"fmt"
 
-	utp "github.com/anacrolix/utp"
 	ma "github.com/jbenet/go-multiaddr"
 	manet "github.com/jbenet/go-multiaddr-net"
 	mafmt "github.com/whyrusleeping/mafmt"
@@ -40,29 +39,6 @@ func (fbd *FallbackDialer) tcpDial(ctx context.Context, raddr ma.Multiaddr) (Con
 
 	return &ConnWrap{
 		Conn: c,
-	}, nil
-}
-
-// NOTE: this code is currently not in use. utp is not stable enough for prolonged
-// use on the network, and causes random stalls in the stack.
-func (fbd *FallbackDialer) utpDial(raddr ma.Multiaddr) (Conn, error) {
-	_, addr, err := manet.DialArgs(raddr)
-	if err != nil {
-		return nil, err
-	}
-
-	con, err := utp.Dial(addr)
-	if err != nil {
-		return nil, err
-	}
-
-	mnc, err := manet.WrapNetConn(con)
-	if err != nil {
-		return nil, err
-	}
-
-	return &ConnWrap{
-		Conn: mnc,
 	}, nil
 }
 
