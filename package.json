@@ -36,5 +36,5 @@
   "language": "go",
   "license": "MIT",
   "name": "go-libp2p-transport",
-  "version": "1.6.1"
+  "version": "2.0.0"
 }
