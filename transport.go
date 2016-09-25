@@ -51,12 +51,12 @@ type Listener interface {
 	Multiaddr() ma.Multiaddr
 }
 
-type connWrap struct {
+type ConnWrap struct {
 	manet.Conn
 	transport Transport
 }
 
-func (cw *connWrap) Transport() Transport {
+func (cw *ConnWrap) Transport() Transport {
 	return cw.transport
 }
 

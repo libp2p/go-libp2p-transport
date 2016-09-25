@@ -38,7 +38,7 @@ func (fbd *FallbackDialer) tcpDial(ctx context.Context, raddr ma.Multiaddr) (Con
 		return nil, err
 	}
 
-	return &connWrap{
+	return &ConnWrap{
 		Conn: c,
 	}, nil
 }
@@ -61,7 +61,7 @@ func (fbd *FallbackDialer) utpDial(raddr ma.Multiaddr) (Conn, error) {
 		return nil, err
 	}
 
-	return &connWrap{
+	return &ConnWrap{
 		Conn: mnc,
 	}, nil
 }
