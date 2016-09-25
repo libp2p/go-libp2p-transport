@@ -1,10 +1,10 @@
 {
   "author": "whyrusleeping",
   "bugs": {
-    "url": "https://github.com/ipfs/go-libp2p-transport"
+    "url": "https://github.com/libp2p/go-libp2p-transport"
   },
   "gx": {
-    "dvcsimport": "github.com/ipfs/go-libp2p-transport"
+    "dvcsimport": "github.com/libp2p/go-libp2p-transport"
   },
   "gxDependencies": [
     {
@@ -20,13 +20,7 @@
       "version": "1.0.11"
     },
     {
-      "author": "whyrusleeping",
-      "hash": "QmaaC9QMYTQHCbMq3Ebr3uMaAR2ev4AVqMmsJpgQijAZbJ",
-      "name": "go-reuseport",
-      "version": "0.1.0"
-    },
-    {
-      "author": "whyrusleeping",
+      "author": "jbenet",
       "hash": "QmY83KqqnQ286ZWbV2x7ixpeemH3cBpk8R54egS619WYff",
       "name": "go-multiaddr-net",
       "version": "1.3.0"
@@ -36,12 +30,6 @@
       "hash": "QmeLQ13LftT9XhNn22piZc3GP56fGqhijuL5Y8KdUaRn1g",
       "name": "mafmt",
       "version": "1.1.1"
-    },
-    {
-      "author": "whyrusleeping",
-      "hash": "QmPSR1zYgWRmTSt6nTGXdeeUhWkq9AdvK4sva4Y2H5daPi",
-      "name": "utp",
-      "version": "0.0.0"
     }
   ],
   "gxVersion": "0.4.0",

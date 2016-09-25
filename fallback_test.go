@@ -7,6 +7,7 @@ import (
 	"testing"
 
 	ma "github.com/jbenet/go-multiaddr"
+	manet "github.com/jbenet/go-multiaddr-net"
 )
 
 func assertWrite(w io.Writer, data []byte) error {
@@ -41,14 +42,9 @@ func TestFallbackDialTcp(t *testing.T) {
 		t.Fatal(err)
 	}
 
-	tcptpt := NewTCPTransport()
-	list, err := tcptpt.Listen(laddr)
+	list, err := manet.Listen(laddr)
 	if err != nil {
 		t.Fatal(err)
-	}
-
-	if !tcptpt.Matches(laddr) {
-		t.Fatal("tcp transport should match tcp multiaddr")
 	}
 
 	done := make(chan bool)
@@ -63,10 +59,6 @@ func TestFallbackDialTcp(t *testing.T) {
 		err = assertWrite(scon, message)
 		if err != nil {
 			t.Error(err)
-		}
-
-		if scon.Transport() != tcptpt {
-			t.Error("scon should have right transport")
 		}
 	}()
 
@@ -74,63 +66,6 @@ func TestFallbackDialTcp(t *testing.T) {
 
 	if !fbd.Matches(list.Multiaddr()) {
 		t.Fatal("fallback dialer should match tcp multiaddr")
-	}
-
-	con, err := fbd.Dial(list.Multiaddr())
-	if err != nil {
-		t.Fatal(err)
-	}
-
-	err = assertRead(con, message)
-	if err != nil {
-		t.Fatal(err)
-	}
-
-	<-done
-}
-
-func TestFallbackDialUtp(t *testing.T) {
-	t.Skip("fallback dialer has utp disabled")
-	laddr, err := ma.NewMultiaddr("/ip4/127.0.0.1/udp/0/utp")
-	if err != nil {
-		t.Fatal(err)
-	}
-
-	utptpt := NewUtpTransport()
-	list, err := utptpt.Listen(laddr)
-	if err != nil {
-		t.Fatal(err)
-	}
-
-	if !utptpt.Matches(laddr) {
-		t.Fatal("utp transport should match utp multiaddr")
-	}
-
-	done := make(chan bool)
-	message := []byte("this is only a test")
-	go func() {
-		defer close(done)
-		scon, err := list.Accept()
-		if err != nil {
-			t.Error(err)
-			return
-		}
-
-		err = assertWrite(scon, message)
-		if err != nil {
-			t.Error(err)
-			return
-		}
-
-		if scon.Transport() != utptpt {
-			t.Error("scon should have right transport")
-		}
-	}()
-
-	fbd := new(FallbackDialer)
-
-	if !fbd.Matches(list.Multiaddr()) {
-		t.Fatal("fallback dialer should match utp multiaddr")
 	}
 
 	con, err := fbd.Dial(list.Multiaddr())

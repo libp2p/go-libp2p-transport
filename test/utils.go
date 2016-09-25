@@ -1,30 +1,12 @@
-package transport
+package utils
 
 import (
-	"fmt"
-	"io"
 	"testing"
 
-	ma "github.com/jbenet/go-multiaddr"
+	tpt "github.com/libp2p/go-libp2p-transport"
 )
 
-func TestTcpTransport(t *testing.T) {
-	ta := NewTCPTransport()
-	tb := NewTCPTransport()
-
-	zero := "/ip4/127.0.0.1/tcp/0"
-	subtestTransport(t, ta, tb, zero)
-}
-
-func TestUtpTransport(t *testing.T) {
-	ta := NewUtpTransport()
-	tb := NewUtpTransport()
-
-	zero := "/ip4/127.0.0.1/udp/0/utp"
-	subtestTransport(t, ta, tb, zero)
-}
-
-func subtestTransport(t *testing.T, ta, tb Transport, addr string) {
+func SubtestTransport(t *testing.T, ta, tb tpt.Transport, addr string) {
 	maddr, err := ma.NewMultiaddr(addr)
 	if err != nil {
 		t.Fatal(err)
@@ -57,7 +39,7 @@ func subtestTransport(t *testing.T, ta, tb Transport, addr string) {
 		t.Fatal(err)
 	}
 
-	var b Conn
+	var b tpt.Conn
 	select {
 	case b = <-accepted:
 	case err := <-errs:
@@ -132,27 +114,4 @@ func checkDataTransfer(a, b io.ReadWriter) error {
 	}
 
 	return nil
-}
-
-func TestTcpTransportCantListenUtp(t *testing.T) {
-	utpa, err := ma.NewMultiaddr("/ip4/127.0.0.1/udp/0/utp")
-	if err != nil {
-		t.Fatal(err)
-	}
-
-	tpt := NewTCPTransport()
-	_, err = tpt.Listen(utpa)
-	if err == nil {
-		t.Fatal("shouldnt be able to listen on utp addr with tcp transport")
-	}
-
-}
-
-func TestUtpThing(t *testing.T) {
-	utpa, err := ma.NewMultiaddr("/ip4/127.0.0.1/udp/0/utp")
-	if err != nil {
-		t.Fatal(err)
-	}
-
-	parseUtpMaddr(utpa)
 }
