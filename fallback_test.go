@@ -6,8 +6,8 @@ import (
 	"io"
 	"testing"
 
-	ma "github.com/jbenet/go-multiaddr"
-	manet "github.com/jbenet/go-multiaddr-net"
+	ma "github.com/multiformats/go-multiaddr"
+	manet "github.com/multiformats/go-multiaddr-net"
 )
 
 func assertWrite(w io.Writer, data []byte) error {
