@@ -9,9 +9,9 @@
   "gxDependencies": [
     {
       "author": "whyrusleeping",
-      "hash": "Qmc5MpYqjYDTF7TGQf6PkBUFDSQqcZJeCNsKiTa1rQYGef",
+      "hash": "QmTMy4hVSY28DdwJ9kBz6y7q6MuioFzPcpM3Ma3aPjo1i3",
       "name": "go-libp2p-loggables",
-      "version": "1.1.0"
+      "version": "1.1.1"
     },
     {
       "author": "jbenet",
