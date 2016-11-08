@@ -11,6 +11,26 @@ import (
 
 var log = logging.Logger("transport")
 
+type PacketTransport interface {
+	Dialer(laddr ma.Multiaddr, opts ...DialOpt) (PacketDialer, error)
+	Listen(laddr ma.Multiaddr) (PacketConn, error)
+	Matches(ma.Multiaddr) bool
+}
+
+type PacketDialer interface {
+	Dial(raddr ma.Multiaddr) (PacketConn, error)
+	DialContext(ctx context.Context, raddr ma.Multiaddr) (PacketConn, error)
+	Matches(ma.Multiaddr) bool
+}
+
+type PacketConn interface {
+	net.PacketConn
+	manet.ConnWrap
+	ReadMsg(msg []byte) (int, ma.Multiaddr, error)
+	WriteMsg(msg []byte, raddr ma.Multiaddr) (int, error)
+	Transport() PacketTransport
+}
+
 // Conn is an extension of the net.Conn interface that provides multiaddr
 // information, and an accessor for the transport used to create the conn
 type Conn interface {
