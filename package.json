@@ -30,6 +30,6 @@
   "license": "MIT",
   "name": "go-libp2p-transport",
   "releaseCmd": "git commit -a -m \"gx publish $VERSION\"",
-  "version": "2.2.4"
+  "version": "2.2.5"
 }
 
