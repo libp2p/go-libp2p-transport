@@ -51,15 +51,6 @@ type Listener interface {
 	Multiaddr() ma.Multiaddr
 }
 
-type ConnWrap struct {
-	manet.Conn
-	Tpt Transport
-}
-
-func (cw *ConnWrap) Transport() Transport {
-	return cw.Tpt
-}
-
 // DialOpt is an option used for configuring dialer behaviour
 type DialOpt interface{}
 
