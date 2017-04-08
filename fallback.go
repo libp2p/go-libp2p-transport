@@ -13,6 +13,8 @@ type FallbackDialer struct {
 	madialer manet.Dialer
 }
 
+var _ Dialer = &FallbackDialer{}
+
 func (fbd *FallbackDialer) Matches(a ma.Multiaddr) bool {
 	return mafmt.TCP.Matches(a)
 }

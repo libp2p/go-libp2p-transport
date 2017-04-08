@@ -52,7 +52,7 @@ func SubtestTransport(t *testing.T, ta, tb tpt.Transport, addr string) {
 	defer a.Close()
 	defer b.Close()
 
-	err = checkDataTransfer(a, b)
+	err = checkDataTransfer(a.(tpt.SingleStreamConn), b.(tpt.SingleStreamConn))
 	if err != nil {
 		t.Fatal(err)
 	}

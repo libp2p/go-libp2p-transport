@@ -2,10 +2,12 @@ package transport
 
 import (
 	"context"
+	"io"
 	"net"
 	"time"
 
 	logging "github.com/ipfs/go-log"
+	smux "github.com/libp2p/go-stream-muxer"
 	ma "github.com/multiformats/go-multiaddr"
 	manet "github.com/multiformats/go-multiaddr-net"
 )
@@ -15,7 +17,46 @@ var log = logging.Logger("transport")
 // Conn is an extension of the net.Conn interface that provides multiaddr
 // information, and an accessor for the transport used to create the conn
 type Conn interface {
-	manet.Conn
+	io.Closer
+
+	RemoteAddr() net.Addr
+	RemoteMultiaddr() ma.Multiaddr
+
+	LocalAddr() net.Addr
+	LocalMultiaddr() ma.Multiaddr
+
+	SetDeadline(time.Time) error
+	SetReadDeadline(time.Time) error
+	SetWriteDeadline(time.Time) error
+
+	Transport() Transport
+}
+
+// A SingleStreamConn is a connection that provides a single channel between two endpoints
+// e.g. a TCP connection
+type SingleStreamConn interface {
+	Conn
+
+	io.Reader
+	io.Writer
+}
+
+// A MultiStreamConn is a connection that supports transport-level stream multiplexing.
+// e.g. a QUIC connection
+// The MultiStreamConn combines the smux.Conn and the Conn interface
+// (unfortunately Go still doesn't allow duplicate interface methods...)
+type MultiStreamConn interface {
+	smux.Conn
+
+	RemoteAddr() net.Addr
+	RemoteMultiaddr() ma.Multiaddr
+
+	LocalAddr() net.Addr
+	LocalMultiaddr() ma.Multiaddr
+
+	SetDeadline(time.Time) error
+	SetReadDeadline(time.Time) error
+	SetWriteDeadline(time.Time) error
 
 	Transport() Transport
 }
@@ -51,11 +92,14 @@ type Listener interface {
 	Multiaddr() ma.Multiaddr
 }
 
+// ConnWrap wraps a Conn
+// it only works for single stream connections
 type ConnWrap struct {
 	manet.Conn
 	Tpt Transport
 }
 
+// Transport returns the transport used
 func (cw *ConnWrap) Transport() Transport {
 	return cw.Tpt
 }
