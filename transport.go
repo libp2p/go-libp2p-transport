@@ -9,7 +9,6 @@ import (
 	logging "github.com/ipfs/go-log"
 	smux "github.com/libp2p/go-stream-muxer"
 	ma "github.com/multiformats/go-multiaddr"
-	manet "github.com/multiformats/go-multiaddr-net"
 )
 
 var log = logging.Logger("transport")
@@ -90,18 +89,6 @@ type Listener interface {
 	Close() error
 	Addr() net.Addr
 	Multiaddr() ma.Multiaddr
-}
-
-// ConnWrap wraps a Conn
-// it only works for single stream connections
-type ConnWrap struct {
-	manet.Conn
-	Tpt Transport
-}
-
-// Transport returns the transport used
-func (cw *ConnWrap) Transport() Transport {
-	return cw.Tpt
 }
 
 // DialOpt is an option used for configuring dialer behaviour

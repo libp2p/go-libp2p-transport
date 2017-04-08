@@ -39,9 +39,15 @@ func (fbd *FallbackDialer) tcpDial(ctx context.Context, raddr ma.Multiaddr) (Con
 		return nil, err
 	}
 
-	return &ConnWrap{
+	return &fallbackConn{
 		Conn: c,
 	}, nil
 }
 
-var _ Dialer = (*FallbackDialer)(nil)
+type fallbackConn struct {
+	manet.Conn
+}
+
+func (c *fallbackConn) Transport() Transport {
+	return nil
+}
