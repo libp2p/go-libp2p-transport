@@ -24,10 +24,6 @@ type Conn interface {
 	LocalAddr() net.Addr
 	LocalMultiaddr() ma.Multiaddr
 
-	SetDeadline(time.Time) error
-	SetReadDeadline(time.Time) error
-	SetWriteDeadline(time.Time) error
-
 	Transport() Transport
 }
 
@@ -38,6 +34,10 @@ type SingleStreamConn interface {
 
 	io.Reader
 	io.Writer
+
+	SetDeadline(time.Time) error
+	SetReadDeadline(time.Time) error
+	SetWriteDeadline(time.Time) error
 }
 
 // A MultiStreamConn is a connection that supports transport-level stream multiplexing.
@@ -52,10 +52,6 @@ type MultiStreamConn interface {
 
 	LocalAddr() net.Addr
 	LocalMultiaddr() ma.Multiaddr
-
-	SetDeadline(time.Time) error
-	SetReadDeadline(time.Time) error
-	SetWriteDeadline(time.Time) error
 
 	Transport() Transport
 }
