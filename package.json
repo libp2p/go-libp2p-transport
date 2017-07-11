@@ -9,15 +9,15 @@
   "gxDependencies": [
     {
       "author": "jbenet",
-      "hash": "Qmf1Gq7N45Rpuw7ev47uWgH6dLPtdnvcMRNPkVBwqjLJg2",
+      "hash": "QmX3U3YXCQ6UYBxq2LVWF8dARS1hPUTEYLrSx654Qyxyw6",
       "name": "go-multiaddr-net",
-      "version": "1.5.4"
+      "version": "1.5.5"
     },
     {
       "author": "whyrusleeping",
-      "hash": "QmSkUKdsSrEo1v28Y3NJ7vQT7jmbxg87g8ucbhctwHEqb4",
+      "hash": "QmZQa5J7j7kd44GGC4aKX8J9JGGzCMqwGzcEFqGV1YD57A",
       "name": "mafmt",
-      "version": "1.2.2"
+      "version": "1.2.3"
     },
     {
       "hash": "QmSpJByNKFX1sCsHBEp3R73FL4NF6FnQTEGyNAXHm2GS52",
@@ -30,6 +30,6 @@
   "license": "MIT",
   "name": "go-libp2p-transport",
   "releaseCmd": "git commit -a -m \"gx publish $VERSION\"",
-  "version": "2.2.7"
+  "version": "2.2.8"
 }
 
