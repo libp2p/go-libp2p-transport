@@ -90,7 +90,6 @@ type Listener interface {
 // DialOpt is an option used for configuring dialer behaviour
 type DialOpt interface{}
 
-type TimeoutOpt time.Duration
 type ReuseportOpt bool
 
 var ReusePorts ReuseportOpt = true
