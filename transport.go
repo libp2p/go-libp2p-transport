@@ -27,9 +27,9 @@ type Conn interface {
 	Transport() Transport
 }
 
-// A SingleStreamConn is a connection that provides a single channel between two endpoints
+// A DuplexConn is a connection that provides a single channel between two endpoints
 // e.g. a TCP connection
-type SingleStreamConn interface {
+type DuplexConn interface {
 	Conn
 
 	io.Reader
@@ -40,11 +40,11 @@ type SingleStreamConn interface {
 	SetWriteDeadline(time.Time) error
 }
 
-// A MultiStreamConn is a connection that supports transport-level stream multiplexing.
+// A MultiplexConn is a connection that supports transport-level stream multiplexing.
 // e.g. a QUIC connection
 // The MultiStreamConn combines the smux.Conn and the Conn interface
 // (unfortunately Go still doesn't allow duplicate interface methods...)
-type MultiStreamConn interface {
+type MultiplexConn interface {
 	smux.Conn
 
 	RemoteAddr() net.Addr
@@ -55,6 +55,8 @@ type MultiStreamConn interface {
 
 	Transport() Transport
 }
+
+var _ Conn = (MultiplexConn)(nil)
 
 // Transport represents any device by which you can connect to and accept
 // connections from other peers. The built-in transports provided are TCP and UTP
