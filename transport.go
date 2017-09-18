@@ -24,10 +24,8 @@ type PacketDialer interface {
 }
 
 type PacketConn interface {
-	net.PacketConn
-	manet.ConnWrap
-	ReadMsg(msg []byte) (int, ma.Multiaddr, error)
-	WriteMsg(msg []byte, raddr ma.Multiaddr) (int, error)
+	manet.PacketConn
+
 	Transport() PacketTransport
 }
 
