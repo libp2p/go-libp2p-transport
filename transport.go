@@ -2,13 +2,12 @@ package transport
 
 import (
 	"context"
-	"io"
 	"net"
 	"time"
 
 	logging "github.com/ipfs/go-log"
-	smux "github.com/libp2p/go-stream-muxer"
 	ma "github.com/multiformats/go-multiaddr"
+	manet "github.com/multiformats/go-multiaddr-net"
 )
 
 var log = logging.Logger("transport")
@@ -16,47 +15,10 @@ var log = logging.Logger("transport")
 // Conn is an extension of the net.Conn interface that provides multiaddr
 // information, and an accessor for the transport used to create the conn
 type Conn interface {
-	io.Closer
-
-	RemoteAddr() net.Addr
-	RemoteMultiaddr() ma.Multiaddr
-
-	LocalAddr() net.Addr
-	LocalMultiaddr() ma.Multiaddr
+	manet.Conn
 
 	Transport() Transport
 }
-
-// A DuplexConn is a connection that provides a single channel between two endpoints
-// e.g. a TCP connection
-type DuplexConn interface {
-	Conn
-
-	io.Reader
-	io.Writer
-
-	SetDeadline(time.Time) error
-	SetReadDeadline(time.Time) error
-	SetWriteDeadline(time.Time) error
-}
-
-// A MultiplexConn is a connection that supports transport-level stream multiplexing.
-// e.g. a QUIC connection
-// The MultiStreamConn combines the smux.Conn and the Conn interface
-// (unfortunately Go still doesn't allow duplicate interface methods...)
-type MultiplexConn interface {
-	smux.Conn
-
-	RemoteAddr() net.Addr
-	RemoteMultiaddr() ma.Multiaddr
-
-	LocalAddr() net.Addr
-	LocalMultiaddr() ma.Multiaddr
-
-	Transport() Transport
-}
-
-var _ Conn = (MultiplexConn)(nil)
 
 // Transport represents any device by which you can connect to and accept
 // connections from other peers. The built-in transports provided are TCP and UTP
@@ -89,9 +51,19 @@ type Listener interface {
 	Multiaddr() ma.Multiaddr
 }
 
+type ConnWrap struct {
+	manet.Conn
+	Tpt Transport
+}
+
+func (cw *ConnWrap) Transport() Transport {
+	return cw.Tpt
+}
+
 // DialOpt is an option used for configuring dialer behaviour
 type DialOpt interface{}
 
+type TimeoutOpt time.Duration
 type ReuseportOpt bool
 
 var ReusePorts ReuseportOpt = true

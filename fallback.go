@@ -13,8 +13,6 @@ type FallbackDialer struct {
 	madialer manet.Dialer
 }
 
-var _ Dialer = &FallbackDialer{}
-
 func (fbd *FallbackDialer) Matches(a ma.Multiaddr) bool {
 	return mafmt.TCP.Matches(a)
 }
@@ -39,15 +37,9 @@ func (fbd *FallbackDialer) tcpDial(ctx context.Context, raddr ma.Multiaddr) (Con
 		return nil, err
 	}
 
-	return &fallbackConn{
+	return &ConnWrap{
 		Conn: c,
 	}, nil
 }
 
-type fallbackConn struct {
-	manet.Conn
-}
-
-func (c *fallbackConn) Transport() Transport {
-	return nil
-}
+var _ Dialer = (*FallbackDialer)(nil)
