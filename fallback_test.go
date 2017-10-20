@@ -73,7 +73,7 @@ func TestFallbackDialTcp(t *testing.T) {
 		t.Fatal(err)
 	}
 
-	err = assertRead(con.(DuplexConn), message)
+	err = assertRead(con, message)
 	if err != nil {
 		t.Fatal(err)
 	}
