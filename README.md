@@ -5,7 +5,7 @@
 [![](https://img.shields.io/badge/project-IPFS-blue.svg?style=flat-square)](https://libp2p.io/)
 [![standard-readme compliant](https://img.shields.io/badge/standard--readme-OK-green.svg?style=flat-square)](https://github.com/RichardLitt/standard-readme)
 [![GoDoc](https://godoc.org/github.com/libp2p/go-libp2p-transport?status.svg)](https://godoc.org/github.com/libp2p/go-libp2p-transport)
-[![Coverage Status](https://coveralls.io/repos/github/libp2p/go-libp2p-transport/badge.svg?branch=master)](https://coveralls.io/github/libp2p/go-libp2p-transport?branch=master)
+[![Coverage Status](https://img.shields.io/codecov/c/github/libp2p/go-libp2p-transport.svg?style=flat-square&branch=master)](https://codecov.io/github/libp2p/go-libp2p-transport?branch=master)
 [![Build Status](https://travis-ci.org/libp2p/go-libp2p-transport.svg?branch=master)](https://travis-ci.org/libp2p/go-libp2p-transport)
 
 > libp2p transport code
