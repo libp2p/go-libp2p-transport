@@ -20,7 +20,7 @@ func SubtestTransport(t *testing.T, ta, tb tpt.Transport, addr string) {
 		t.Fatal(err)
 	}
 
-	dialer, err := tb.Dialer(maddr)
+	dialer, err := tb.Dialer(list.Multiaddr())
 	if err != nil {
 		t.Fatal(err)
 	}
