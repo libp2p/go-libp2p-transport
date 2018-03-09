@@ -21,26 +21,6 @@ This is the 'base' layer for any transport that wants to be used by libp2p and i
 > gx-go rewrite
 ```
 
-## Usage
-
-```go
-var t Transport
-
-t = NewTCPTransport()
-
-list, err := t.Listen(listener_maddr)
-if err != nil {
-	log.Fatal(err)
-}
-
-con, err := list.Accept()
-if err != nil {
-	log.Fatal(err)
-}
-
-fmt.Fprintln(con, "Hello World!")
-```
-
 ## Contribute
 
 Feel free to join in. All welcome. Open an [issue](https://github.com/libp2p/go-libp2p-transport/issues)!
