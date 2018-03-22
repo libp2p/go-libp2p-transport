@@ -84,11 +84,14 @@ type Network interface {
 
 	// AddTransport adds a transport to this Network.
 	//
-	// When listening/dialing, this Network will pick transports according to the following algorithm:
+	// When dialing, this Network will iterate over the protocols in the
+	// remote multiaddr and pick the first protocol registered with a proxy
+	// transport, if any. Otherwise, it'll pick the transport registered to
+	// handle the last protocol in the multiaddr.
 	//
-	// 1. For each protocol in the target multiaddr from left to right, if
-	//    there is a proxy transport that handles this protocol, use it.
-	// 2. Otherwise, use the transport that handles the last protocol in the
-	//    multiaddr.
+	// When listening, this Network will iterate over the protocols in the
+	// local multiaddr and pick the *last* protocol registered with a proxy
+	// transport, if any. Otherwise, it'll pick the transport registered to
+	// handle the last protocol in the multiaddr.
 	AddTransport(t Transport) error
 }
