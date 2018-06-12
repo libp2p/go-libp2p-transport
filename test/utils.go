@@ -4,7 +4,6 @@ import (
 	"context"
 	"io"
 	"testing"
-	"time"
 
 	peer "github.com/libp2p/go-libp2p-peer"
 	tpt "github.com/libp2p/go-libp2p-transport"
@@ -156,30 +155,9 @@ func SubtestCancel(t *testing.T, ta, tb tpt.Transport, maddr ma.Multiaddr, peerA
 
 	ctx, cancel := context.WithCancel(context.Background())
 	cancel()
-	done := make(chan struct{})
-	go func() {
-		defer close(done)
-		c, err := tb.Dial(ctx, list.Multiaddr(), peerA)
-		if err == nil {
-			c.Close()
-			t.Fatal("dial should have failed")
-		}
-	}()
-
-	time.Sleep(time.Millisecond)
-	cancel()
-	<-done
-
-	done = make(chan struct{})
-	go func() {
-		defer close(done)
-		c, err := list.Accept()
-		if err == nil {
-			c.Close()
-			t.Fatal("accept should have failed")
-		}
-	}()
-	time.Sleep(time.Millisecond)
-	list.Close()
-	<-done
+	c, err := tb.Dial(ctx, list.Multiaddr(), peerA)
+	if err == nil {
+		c.Close()
+		t.Fatal("dial should have failed")
+	}
 }
