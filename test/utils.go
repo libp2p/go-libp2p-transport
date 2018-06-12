@@ -1,8 +1,12 @@
 package utils
 
 import (
+	"bytes"
 	"context"
+	"fmt"
 	"io"
+	"io/ioutil"
+	"sync"
 	"testing"
 
 	peer "github.com/libp2p/go-libp2p-peer"
@@ -22,6 +26,7 @@ var Subtests = map[string]func(t *testing.T, ta, tb tpt.Transport, maddr ma.Mult
 	"Protocols": SubtestProtocols,
 	"Basic":     SubtestBasic,
 	"Cancel":    SubtestCancel,
+	"PingPong":  SubtestPingPong,
 }
 
 func SubtestTransport(t *testing.T, ta, tb tpt.Transport, addr string, peerA peer.ID) {
@@ -144,6 +149,119 @@ func SubtestBasic(t *testing.T, ta, tb tpt.Transport, maddr ma.Multiaddr, peerA 
 		t.Fatal(err)
 		return
 	}
+}
+
+func SubtestPingPong(t *testing.T, ta, tb tpt.Transport, maddr ma.Multiaddr, peerA peer.ID) {
+	streams := 100
+
+	ctx, cancel := context.WithCancel(context.Background())
+	defer cancel()
+
+	list, err := ta.Listen(maddr)
+	if err != nil {
+		t.Fatal(err)
+	}
+	defer list.Close()
+
+	var wg sync.WaitGroup
+
+	wg.Add(1)
+	go func() {
+		defer wg.Done()
+		c, err := list.Accept()
+		if err != nil {
+			t.Error(err)
+			return
+		}
+		defer c.Close()
+
+		var sWg sync.WaitGroup
+		for i := 0; i < streams; i++ {
+			s, err := c.AcceptStream()
+			if err != nil {
+				t.Error(err)
+				return
+			}
+
+			sWg.Add(1)
+			go func() {
+				defer sWg.Done()
+
+				data, err := ioutil.ReadAll(s)
+				if err != nil {
+					s.Reset()
+					t.Error(err)
+					return
+				}
+				if !bytes.HasPrefix(data, testData) {
+					t.Errorf("expected %q to have prefix %q", string(data), string(testData))
+				}
+
+				n, err := s.Write(data)
+				if err != nil {
+					s.Reset()
+					t.Error(err)
+					return
+				}
+
+				if n != len(data) {
+					s.Reset()
+					t.Error(err)
+					return
+				}
+				s.Close()
+			}()
+		}
+		sWg.Wait()
+	}()
+
+	if !tb.CanDial(list.Multiaddr()) {
+		t.Error("CanDial should have returned true")
+	}
+
+	c, err := tb.Dial(ctx, list.Multiaddr(), peerA)
+	if err != nil {
+		t.Fatal(err)
+	}
+	defer c.Close()
+
+	for i := 0; i < streams; i++ {
+		s, err := c.OpenStream()
+		if err != nil {
+			t.Error(err)
+			continue
+		}
+
+		wg.Add(1)
+		go func(i int) {
+			defer wg.Done()
+			data := []byte(fmt.Sprintf("%s - %d", testData, i))
+			n, err := s.Write(data)
+			if err != nil {
+				s.Reset()
+				t.Error(err)
+				return
+			}
+
+			if n != len(data) {
+				s.Reset()
+				t.Error("failed to write enough data (a->b)")
+				return
+			}
+			s.Close()
+
+			ret, err := ioutil.ReadAll(s)
+			if err != nil {
+				s.Reset()
+				t.Error(err)
+				return
+			}
+			if !bytes.Equal(data, ret) {
+				t.Errorf("expected %q, got %q", string(data), string(ret))
+			}
+		}(i)
+	}
+	wg.Wait()
 }
 
 func SubtestCancel(t *testing.T, ta, tb tpt.Transport, maddr ma.Multiaddr, peerA peer.ID) {
