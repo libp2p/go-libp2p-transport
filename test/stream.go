@@ -15,6 +15,7 @@ import (
 	"testing"
 	"time"
 
+	detectrace "github.com/ipfs/go-detect-race"
 	peer "github.com/libp2p/go-libp2p-peer"
 	tpt "github.com/libp2p/go-libp2p-transport"
 	smux "github.com/libp2p/go-stream-muxer"
@@ -288,6 +289,11 @@ func SubtestStreamOpenStress(t *testing.T, ta, tb tpt.Transport, maddr ma.Multia
 
 	count := 10000
 	workers := 5
+
+	if detectrace.WithRace() {
+		// the race detector can only deal with 8128 simultaneous goroutines, so let's make sure we don't go overboard.
+		count = 1000
+	}
 
 	var (
 		connA, connB tpt.Conn
