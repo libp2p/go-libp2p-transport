@@ -342,7 +342,7 @@ func SubtestStreamOpenStress(t *testing.T, ta, tb tpt.Transport, maddr ma.Multia
 		}
 	}()
 
-	timeout := time.After(time.Second * 10)
+	timeout := time.After(time.Minute * 1)
 	done := make(chan struct{})
 
 	go func() {
