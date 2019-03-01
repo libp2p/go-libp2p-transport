@@ -8,7 +8,9 @@ import (
 	"io"
 	"io/ioutil"
 	mrand "math/rand"
+	"os"
 	"runtime/debug"
+	"strconv"
 	"sync"
 	"testing"
 	"time"
@@ -25,11 +27,19 @@ var VerboseDebugging = false
 
 var randomness []byte
 
+var StressTestTimeout = 1 * time.Minute
+
 func init() {
 	// read 1MB of randomness
 	randomness = make([]byte, 1<<20)
 	if _, err := crand.Read(randomness); err != nil {
 		panic(err)
+	}
+
+	if timeout := os.Getenv("TEST_STRESS_TIMEOUT_MS"); timeout != "" {
+		if v, err := strconv.ParseInt(timeout, 10, 32); err == nil {
+			StressTestTimeout = time.Duration(v) * time.Millisecond
+		}
 	}
 }
 
@@ -342,7 +352,7 @@ func SubtestStreamOpenStress(t *testing.T, ta, tb tpt.Transport, maddr ma.Multia
 		}
 	}()
 
-	timeout := time.After(time.Minute * 1)
+	timeout := time.After(StressTestTimeout)
 	done := make(chan struct{})
 
 	go func() {
