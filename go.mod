@@ -7,5 +7,3 @@ require (
 	github.com/libp2p/go-stream-muxer v0.0.1
 	github.com/multiformats/go-multiaddr v0.0.2
 )
-
-go 1.11
