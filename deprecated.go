@@ -19,5 +19,5 @@ type Transport = moved.Transport
 // Deprecated: Use github.com/libp2p/go-libp2p-core/transport.Listener instead.
 type Listener = moved.Listener
 
-// Deprecated: Use github.com/libp2p/go-libp2p-core/transport.TransportBasedNetwork instead.
-type Network = moved.TransportBasedNetwork
+// Deprecated: Use github.com/libp2p/go-libp2p-core/transport.TransportNetwork instead.
+type Network = moved.TransportNetwork

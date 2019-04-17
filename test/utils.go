@@ -1,44 +1,17 @@
 package utils
 
 import (
-	"reflect"
-	"runtime"
 	"testing"
 
-	peer "github.com/libp2p/go-libp2p-peer"
-	tpt "github.com/libp2p/go-libp2p-transport"
-	ma "github.com/multiformats/go-multiaddr"
+	"github.com/libp2p/go-libp2p-core/peer"
+	"github.com/libp2p/go-libp2p-core/transport"
+	moved "github.com/libp2p/go-libp2p-core/transport/test"
 )
 
-var Subtests = []func(t *testing.T, ta, tb tpt.Transport, maddr ma.Multiaddr, peerA peer.ID){
-	SubtestProtocols,
-	SubtestBasic,
-	SubtestCancel,
-	SubtestPingPong,
+// Deprecated: use github.com/libp2p/go-libp2p-core/transport/test.Subtests instead.
+var Subtests = moved.Subtests
 
-	// Stolen from the stream muxer test suite.
-	SubtestStress1Conn1Stream1Msg,
-	SubtestStress1Conn1Stream100Msg,
-	SubtestStress1Conn100Stream100Msg,
-	SubtestStress50Conn10Stream50Msg,
-	SubtestStress1Conn1000Stream10Msg,
-	SubtestStress1Conn100Stream100Msg10MB,
-	SubtestStreamOpenStress,
-	SubtestStreamReset,
-}
-
-func getFunctionName(i interface{}) string {
-	return runtime.FuncForPC(reflect.ValueOf(i).Pointer()).Name()
-}
-
-func SubtestTransport(t *testing.T, ta, tb tpt.Transport, addr string, peerA peer.ID) {
-	maddr, err := ma.NewMultiaddr(addr)
-	if err != nil {
-		t.Fatal(err)
-	}
-	for _, f := range Subtests {
-		t.Run(getFunctionName(f), func(t *testing.T) {
-			f(t, ta, tb, maddr, peerA)
-		})
-	}
+// Deprecated: use github.com/libp2p/go-libp2p-core/transport/test.SubtestTransport instead.
+func SubtestTransport(t *testing.T, ta, tb transport.Transport, addr string, peerA peer.ID) {
+	moved.SubtestTransport(t, ta, tb, addr, peerA)
 }
