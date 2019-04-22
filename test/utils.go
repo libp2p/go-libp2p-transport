@@ -5,13 +5,13 @@ import (
 
 	"github.com/libp2p/go-libp2p-core/peer"
 	"github.com/libp2p/go-libp2p-core/transport"
-	moved "github.com/libp2p/go-libp2p-core/transport/test"
+	core "github.com/libp2p/go-libp2p-core/transport/test"
 )
 
 // Deprecated: use github.com/libp2p/go-libp2p-core/transport/test.Subtests instead.
-var Subtests = moved.Subtests
+var Subtests = core.Subtests
 
 // Deprecated: use github.com/libp2p/go-libp2p-core/transport/test.SubtestTransport instead.
 func SubtestTransport(t *testing.T, ta, tb transport.Transport, addr string, peerA peer.ID) {
-	moved.SubtestTransport(t, ta, tb, addr, peerA)
+	core.SubtestTransport(t, ta, tb, addr, peerA)
 }
