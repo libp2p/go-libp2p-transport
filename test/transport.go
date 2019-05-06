@@ -178,7 +178,6 @@ func SubtestPingPong(t *testing.T, ta, tb tpt.Transport, maddr ma.Multiaddr, pee
 			t.Error(err)
 			return
 		}
-		defer c.Close()
 
 		var sWg sync.WaitGroup
 		for i := 0; i < streams; i++ {
