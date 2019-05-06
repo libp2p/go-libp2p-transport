@@ -168,12 +168,25 @@ func SubtestPingPong(t *testing.T, ta, tb tpt.Transport, maddr ma.Multiaddr, pee
 	}
 	defer list.Close()
 
+	var (
+		connA, connB tpt.Conn
+	)
+	defer func() {
+		if connA != nil {
+			connA.Close()
+		}
+		if connB != nil {
+			connB.Close()
+		}
+	}()
+
 	var wg sync.WaitGroup
 
 	wg.Add(1)
 	go func() {
 		defer wg.Done()
-		c, err := list.Accept()
+		var err error
+		connA, err = list.Accept()
 		if err != nil {
 			t.Error(err)
 			return
@@ -181,7 +194,7 @@ func SubtestPingPong(t *testing.T, ta, tb tpt.Transport, maddr ma.Multiaddr, pee
 
 		var sWg sync.WaitGroup
 		for i := 0; i < streams; i++ {
-			s, err := c.AcceptStream()
+			s, err := connA.AcceptStream()
 			if err != nil {
 				t.Error(err)
 				return
@@ -223,14 +236,13 @@ func SubtestPingPong(t *testing.T, ta, tb tpt.Transport, maddr ma.Multiaddr, pee
 		t.Error("CanDial should have returned true")
 	}
 
-	c, err := tb.Dial(ctx, list.Multiaddr(), peerA)
+	connB, err = tb.Dial(ctx, list.Multiaddr(), peerA)
 	if err != nil {
 		t.Fatal(err)
 	}
-	defer c.Close()
 
 	for i := 0; i < streams; i++ {
-		s, err := c.OpenStream()
+		s, err := connB.OpenStream()
 		if err != nil {
 			t.Error(err)
 			continue
