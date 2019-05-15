@@ -10,8 +10,8 @@ var DialTimeout = core.DialTimeout
 // Warning: it's not possible to alias variables in Go. Setting a value here may have no effect.
 var AcceptTimeout = core.AcceptTimeout
 
-// Deprecated: use github.com/libp2p/go-libp2p-core/transport.UpgradedConn instead.
-type Conn = core.UpgradedConn
+// Deprecated: use github.com/libp2p/go-libp2p-core/transport.CapableConn instead.
+type Conn = core.CapableConn
 
 // Deprecated: use github.com/libp2p/go-libp2p-core/transport.Transport instead.
 type Transport = core.Transport
