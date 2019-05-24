@@ -11,14 +11,12 @@ import (
 )
 
 // Deprecated: use github.com/libp2p/go-libp2p-testing/suites/transport.VerboseDebugging instead.
-// Warning: it's impossible to alias a var in go, so reads and writes to this variable may be inaccurate
-// or not have the intended effect.
-var VerboseDebugging = ttransport.VerboseDebugging
+// Warning: it's impossible to alias a var in go, so commented this var out for safety and to provoke breakage.
+// var VerboseDebugging = ttransport.VerboseDebugging
 
 // Deprecated: use github.com/libp2p/go-libp2p-testing/suites/transport.StressTestTimeout instead.
-// Warning: it's impossible to alias a var in go, so reads and writes to this variable may be inaccurate
-// or not have the intended effect.
-var StressTestTimeout = ttransport.StressTestTimeout
+// Warning: it's impossible to alias a var in go, so commented this var out for safety and to provoke breakage.
+// var StressTestTimeout = ttransport.StressTestTimeout
 
 // Deprecated: use github.com/libp2p/go-libp2p-testing/suites/transport.Options instead.
 type Options = ttransport.Options
