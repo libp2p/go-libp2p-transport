@@ -8,10 +8,10 @@ import (
 	"github.com/libp2p/go-libp2p-testing/suites/transport"
 )
 
-// Deprecated: use github.com/libp2p/go-libp2p-testing/transport.Subtests instead.
+// Deprecated: use github.com/libp2p/go-libp2p-testing/suites/transport.Subtests instead.
 var Subtests = ttransport.Subtests
 
-// Deprecated: use github.com/libp2p/go-libp2p-testing/transport.SubtestTransport instead.
+// Deprecated: use github.com/libp2p/go-libp2p-testing/suites/transport.SubtestTransport instead.
 func SubtestTransport(t *testing.T, ta, tb transport.Transport, addr string, peerA peer.ID) {
 	ttransport.SubtestTransport(t, ta, tb, addr, peerA)
 }

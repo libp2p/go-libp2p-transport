@@ -10,22 +10,22 @@ import (
 	ma "github.com/multiformats/go-multiaddr"
 )
 
-// Deprecated: use github.com/libp2p/go-libp2p-testing/transport.SubtestProtocols instead.
+// Deprecated: use github.com/libp2p/go-libp2p-testing/suites/transport.SubtestProtocols instead.
 func SubtestProtocols(t *testing.T, ta, tb transport.Transport, maddr ma.Multiaddr, peerA peer.ID) {
 	ttransport.SubtestProtocols(t, ta, tb, maddr, peerA)
 }
 
-// Deprecated: use github.com/libp2p/go-libp2p-testing/transport.SubtestBasic instead.
+// Deprecated: use github.com/libp2p/go-libp2p-testing/suites/transport.SubtestBasic instead.
 func SubtestBasic(t *testing.T, ta, tb transport.Transport, maddr ma.Multiaddr, peerA peer.ID) {
 	ttransport.SubtestBasic(t, ta, tb, maddr, peerA)
 }
 
-// Deprecated: use github.com/libp2p/go-libp2p-testing/transport.SubtestPingPong instead.
+// Deprecated: use github.com/libp2p/go-libp2p-testing/suites/transport.SubtestPingPong instead.
 func SubtestPingPong(t *testing.T, ta, tb transport.Transport, maddr ma.Multiaddr, peerA peer.ID) {
 	ttransport.SubtestPingPong(t, ta, tb, maddr, peerA)
 }
 
-// Deprecated: use github.com/libp2p/go-libp2p-testing/transport.SubtestCancel instead.
+// Deprecated: use github.com/libp2p/go-libp2p-testing/suites/transport.SubtestCancel instead.
 func SubtestCancel(t *testing.T, ta, tb transport.Transport, maddr ma.Multiaddr, peerA peer.ID) {
 	ttransport.SubtestCancel(t, ta, tb, maddr, peerA)
 }
